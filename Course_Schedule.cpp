@@ -14,7 +14,7 @@ public:
     }
 };
 
-bool topologicalSortUtil(int node, Graph &graph, unordered_set<int> &visited, unordered_set<int> &recursionStack, stack<int> &result)
+bool checkCycleAvailable(int node, Graph &graph, unordered_set<int> &visited, unordered_set<int> &recursionStack, stack<int> &result)
 {
     // insert the node to the visited node and stack node
     visited.insert(node);
@@ -24,7 +24,7 @@ bool topologicalSortUtil(int node, Graph &graph, unordered_set<int> &visited, un
     {
         if (!visited.count(neighbor))
         {
-            if (!topologicalSortUtil(neighbor, graph, visited, recursionStack, result))
+            if (!checkCycleAvailable(neighbor, graph, visited, recursionStack, result))
                 return false;
         }
         else if (recursionStack.count(neighbor))
@@ -51,7 +51,7 @@ bool topologicalSort(Graph &graph, stack<int> &result)
         int node = entry.first;
         if (!visited.count(node))
         {
-            if (!topologicalSortUtil(node, graph, visited, recursionStack, result))
+            if (!checkCycleAvailable(node, graph, visited, recursionStack, result))
                 return false;
         }
     }
